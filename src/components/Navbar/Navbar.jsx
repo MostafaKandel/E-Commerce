@@ -33,7 +33,7 @@ export default function Navbar() {
   }
 
   return (
-    <HerouiNavbar onMenuOpenChange={setIsMenuOpen}>
+    <HerouiNavbar shouldHideOnScroll onMenuOpenChange={setIsMenuOpen}>
       <NavbarContent>
         <NavbarMenuToggle
           aria-label={isMenuOpen ? "Close menu" : "Open menu"}
