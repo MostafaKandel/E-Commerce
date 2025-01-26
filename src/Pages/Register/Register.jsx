@@ -7,6 +7,7 @@ import { Navigate, useNavigate } from 'react-router-dom';
 
 export default function Register() {
   const [isLoading, setIsLoading] = React.useState(false);
+  const [errMsg, setErrMsg] = React.useState('');
   const navigator = useNavigate();
   const  initialValues= {
     name: '',
@@ -16,12 +17,18 @@ export default function Register() {
     phone: ''
   }
 
-  const onSubmit = async () => {
+  const onSubmit =  () => {
+    setErrMsg('');
     setIsLoading(true);
-    const {data} = await axios.post("https://ecommerce.routemisr.com/api/v1/auth/signup",values);
-    setIsLoading(false);
-    navigator('/login')
-    console.log(data);
+    axios.post("https://ecommerce.routemisr.com/api/v1/auth/signup",values)
+    .then((res) => {
+      console.log(res)
+      navigator('/login')
+    })
+    .catch((err) => {
+      console.log(err)
+      setErrMsg(err.response.data.message)
+    }).finally(() => setIsLoading(false));
   }
 
   const validationSchema = yup.object({
@@ -44,17 +51,13 @@ export default function Register() {
      <div className="my-10">
        <form onSubmit={handleSubmit}>
        <div className="w-2/3 mx-auto grid grid-cols-2 gap-4">
-          <Input onBlur={handleBlur} onChange={handleChange} value={values.name} name='name' variant="bordered" className='col-span-2' label="Name" type='text' />
-          {errors.name && touched.name && <p className='text-red-500'>{errors.name}</p>}
-          <Input onBlur={handleBlur} onChange={handleChange} value={values.email} name='email' variant="bordered" className='col-span-2' label="Email" type='email' />
-          {errors.email && touched.email && <p className='text-red-500'>{errors.email}</p>}
-          <Input onBlur={handleBlur} onChange={handleChange} value={values.password} name='password' variant="bordered" className='col-span-1' label="Password" type='password' />
-          <Input onBlur={handleBlur} onChange={handleChange} value={values.rePassword} name='rePassword' variant="bordered" className='col-span-1' label="rePassword" type='password' />
-          {errors.rePassword && touched.rePassword && <p className='text-red-500'>{errors.rePassword}</p>}
-          {errors.password && touched.password && <p className='text-red-500'>{errors.password}</p>}
-          <Input onBlur={handleBlur} onChange={handleChange} value={values.phone} name='phone' variant="bordered" className='col-span-2' label="Phone" type='tel' />
-           {errors.phone && touched.phone && <p className='text-red-500'>{errors.phone}</p>}
+          <Input isInvalid={errors.name && touched.name} errorMessage={errors.name} onBlur={handleBlur} onChange={handleChange} value={values.name} name='name' variant="bordered" className='col-span-2' label="Name" type='text' />
+          <Input isInvalid={errors.email && touched.email} errorMessage={errors.email} onBlur={handleBlur} onChange={handleChange} value={values.email} name='email' variant="bordered" className='col-span-2' label="Email" type='email' /> 
+          <Input isInvalid={errors.password && touched.password} errorMessage={errors.password} onBlur={handleBlur} onChange={handleChange} value={values.password} name='password' variant="bordered" className='col-span-1' label="Password" type='password' />
+          <Input isInvalid={errors.rePassword && touched.rePassword} errorMessage={errors.rePassword} onBlur={handleBlur} onChange={handleChange} value={values.rePassword} name='rePassword' variant="bordered" className='col-span-1' label="rePassword" type='password' />
+          <Input isInvalid={errors.phone && touched.phone} errorMessage={errors.phone} onBlur={handleBlur} onChange={handleChange} value={values.phone} name='phone' variant="bordered" className='col-span-2' label="Phone" type='tel' />
            <Button isLoading={isLoading} type='submit' className='col-span-2' color='primary'>Register</Button>
+           {errMsg && <p className='text-red-500'>{errMsg}</p>}
         </div>
        </form>
      </div>

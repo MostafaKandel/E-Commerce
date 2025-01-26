@@ -8,18 +8,23 @@ import { Navigate, useNavigate } from 'react-router-dom';
 
 export default function Login() {
   const [isLoading, setIsLoading] = React.useState(false);
+  const [errMsg, setErrMsg] = React.useState('');
   const navigator = useNavigate();
   const  initialValues= {
     email: '',
     password: '',
   }
 
-  const onSubmit = async () => {
+  const onSubmit =  () => {
+    setErrMsg('');
     setIsLoading(true);
-    const {data} = await axios.post("https://ecommerce.routemisr.com/api/v1/auth/signin",values);
-    setIsLoading(false);
-    navigator('/')
-    console.log('login',data);
+    axios.post("https://ecommerce.routemisr.com/api/v1/auth/signin",values).then((res) => {
+      console.log('login',res);
+      navigator('/')
+    }).catch((err) => {
+      console.log(err)
+      setErrMsg(err.response.data.message)
+    }).finally(() => setIsLoading(false));
   }
 
   const validationSchema = yup.object({
@@ -39,13 +44,10 @@ export default function Login() {
      <div className="my-10">
        <form onSubmit={handleSubmit}>
        <div className="w-2/3 mx-auto grid grid-cols-2 gap-4">
-          
-          <Input onBlur={handleBlur} onChange={handleChange} value={values.email} name='email' variant="bordered" className='col-span-2' label="Email" type='email' />
-          {errors.email && touched.email && <p className='text-red-500'>{errors.email}</p>}
-          <Input onBlur={handleBlur} onChange={handleChange} value={values.password} name='password' variant="bordered" className='col-span-2' label="Password" type='password' />
-          {errors.password && touched.password && <p className='text-red-500'>{errors.password}</p>}
-           
+          <Input isInvalid={errors.email && touched.email} erroerMessage={errors.email} onBlur={handleBlur} onChange={handleChange} value={values.email} name='email' variant="bordered" className='col-span-2' label="Email" type='email' />
+          <Input isInvalid={errors.password && touched.password} erroerMessage={errors.password} onBlur={handleBlur} onChange={handleChange} value={values.password} name='password' variant="bordered" className='col-span-2' label="Password" type='password' />
            <Button isLoading={isLoading} type='submit' className='col-span-2' color='primary'>Login</Button>
+           {errMsg && <p className='text-red-500'>{errMsg}</p>}
         </div>
        </form>
      </div>

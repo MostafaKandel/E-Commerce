@@ -1,0 +1,6 @@
+Dependices:
+
+1- Nextui: for components like Input, Navbar
+2- Formik: for work with forms to handle every thing like events, submit 
+3- yup: it is a third- part library used with formik for validation the forms 
+4- 
