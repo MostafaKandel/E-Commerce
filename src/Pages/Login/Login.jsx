@@ -5,10 +5,13 @@ import {useFormik} from 'formik'
 import * as yup from 'yup'
 import axios from 'axios';
 import { Navigate, useNavigate } from 'react-router-dom';
+import { useContext } from 'react';
+import { authContext } from '../../Contexts/AuthContext';
 
 export default function Login() {
   const [isLoading, setIsLoading] = React.useState(false);
   const [errMsg, setErrMsg] = React.useState('');
+  const {setIsLoggedIn}= useContext(authContext);
   const navigator = useNavigate();
   const  initialValues= {
     email: '',
@@ -21,7 +24,8 @@ export default function Login() {
     axios.post("https://ecommerce.routemisr.com/api/v1/auth/signin",values).then((res) => {
       console.log('login',res);
       localStorage.setItem('token',res.data.token)
-      navigator('/')
+      setIsLoggedIn(true)
+      navigator(location.pathname == '/login' ? '/' : location.pathname)
     }).catch((err) => {
       console.log(err)
       setErrMsg(err.response.data.message)

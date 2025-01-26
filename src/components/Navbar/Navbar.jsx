@@ -10,19 +10,27 @@ import {
    
   Button,
 } from "@heroui/react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useContext } from "react";
+import { authContext } from "../../Contexts/AuthContext";
 
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
+  const navigator = useNavigate();
+  const {isLoggedIn, setIsLoggedIn}= useContext(authContext);
 
   const menuItems = [
     "Home",
     "categories",
     "brands",
-    "cart",
-    
-    
+    "cart",   
   ];
+
+ function handleLogout() {
+    localStorage.removeItem("token");
+    setIsLoggedIn(false);
+    navigator("/login");
+  }
 
   return (
     <HerouiNavbar onMenuOpenChange={setIsMenuOpen}>
@@ -39,18 +47,28 @@ export default function Navbar() {
        </Link>
       </NavbarContent>
 
-      <NavbarContent className="hidden sm:flex gap-4" justify="center">
-      {menuItems.map((item, index) => (
-            <NavbarItem key={index}>
-            <Link color="foreground" to={item === "Home" ? "/" : "/"+item}>
-              {item}
-            </Link>
-          </NavbarItem>
-        ))}
-        
-      </NavbarContent>
+     {isLoggedIn &&
+       <NavbarContent className="hidden sm:flex gap-4" justify="center">
+       {menuItems.map((item, index) => (
+             <NavbarItem key={index}>
+             <Link color="foreground" to={item === "Home" ? "/" : "/"+item}>
+               {item}
+             </Link>
+           </NavbarItem>
+         ))}
+         
+       </NavbarContent>
+     }
 
-      <NavbarContent justify="end">
+      {
+        isLoggedIn ?
+        <NavbarContent justify="end">
+      <NavbarItem >
+        <Button color="danger" variant="bordered" onClick={handleLogout}>Logout</Button>
+      </NavbarItem>
+      
+    </NavbarContent>:
+         <NavbarContent justify="end">
         <NavbarItem >
           <Link to="/login">Login</Link>
         </NavbarItem>
@@ -58,22 +76,25 @@ export default function Navbar() {
         <Link to="/register">Register</Link>
         </NavbarItem>
       </NavbarContent>
+       }
 
-      <NavbarMenu>
-        {menuItems.map((item, index) => (
-          <NavbarMenuItem key={`${item}-${index}`}>
-            <Link
-              className="w-full"
-              color={ "foreground"
-              }
-              href="#"
-              size="lg"
-            >
-              {item}
-            </Link>
-          </NavbarMenuItem>
-        ))}
-      </NavbarMenu>
+     {
+       isLoggedIn && <NavbarMenu>
+       {menuItems.map((item, index) => (
+         <NavbarMenuItem key={`${item}-${index}`}>
+           <Link
+             className="w-full"
+             color={ "foreground"
+             }
+             href="#"
+             size="lg"
+           >
+             {item}
+           </Link>
+         </NavbarMenuItem>
+       ))}
+     </NavbarMenu>
+     }
     </HerouiNavbar>
   );
 }
