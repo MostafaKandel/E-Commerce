@@ -1,8 +1,9 @@
 import { Button } from "@heroui/react";
+import { Link } from "react-router-dom";
 export default function Product({product}) {
     return (
         <div  className="flex flex-col justify-between  mx-auto w-full transform overflow-hidden rounded-lg bg-white dark:bg-slate-800 cursor-pointer shadow-md">
-          <div>
+          <Link to={"/product/"+product._id}>
           <div className="overflow-hidden">
           <img className="w-full object-contain object-center duration-300  hover:scale-[103%]" src={product.imageCover} alt="Product Image" />
           </div>
@@ -15,10 +16,10 @@ export default function Product({product}) {
 <p className="ml-auto text-base font-medium text-green-500">20% off</p>
 </div>
     </div>
-          </div>
-<div className="m-4">
+          </Link>
+    <div className="m-4">
 <Button color="success" variant="bordered" className="w-full " endContent={<i className="fas fa-shopping-cart"></i>}>Add to cart</Button>
-</div>
-</div>
+    </div>
+    </div>
       )
 }

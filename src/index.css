@@ -7,4 +7,8 @@
         @apply mx-auto;
     }
 }
+
+.slick-slider .slick-dots{
+    @apply  block
+}
  

@@ -12,6 +12,7 @@ import Notfound from './Pages/Notfound/Notfound'
 import ProtectedRoute from './Auth/ProtectedRoute'
 import AuthContextProvider from './Contexts/AuthContext'
 import ProtectedAuthRoute from './Auth/ProtectedAuthRoute'
+import ProductDetails from './components/ProductDetails/ProductDetails'
 
 const router = createBrowserRouter([
   {
@@ -24,6 +25,7 @@ const router = createBrowserRouter([
       {path:'categories', element:<ProtectedRoute><Categories/></ProtectedRoute> },
       {path:'brands', element:<ProtectedRoute><Brands/></ProtectedRoute> },
       {path:'cart', element:<ProtectedRoute><Cart/></ProtectedRoute> },
+      {path:'product/:id',element:<ProtectedRoute><ProductDetails></ProductDetails></ProtectedRoute>},
       {path:'*', element:<Notfound/>},
 
 
