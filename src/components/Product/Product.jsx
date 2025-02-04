@@ -1,6 +1,10 @@
 import { Button } from "@heroui/react";
 import { Link } from "react-router-dom";
+import { addProductToCart } from "../../Services/cartServices";
 export default function Product({product}) {
+
+   
+
     return (
         <div  className="flex flex-col justify-between  mx-auto w-full transform overflow-hidden rounded-lg bg-white dark:bg-slate-800 cursor-pointer shadow-md">
           <Link to={"/product/"+product._id}>
@@ -18,7 +22,7 @@ export default function Product({product}) {
     </div>
           </Link>
     <div className="m-4">
-<Button color="success" variant="bordered" className="w-full " endContent={<i className="fas fa-shopping-cart"></i>}>Add to cart</Button>
+<Button onPress={() => addProductToCart(product._id)} color="success" variant="bordered" className="w-full " endContent={<i className="fas fa-shopping-cart"></i>}>Add to cart</Button>
     </div>
     </div>
       )

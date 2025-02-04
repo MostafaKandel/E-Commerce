@@ -6,11 +6,14 @@ import LoadingScreen from "../../components/LoadingScreen/LoadingScreen";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import RelatedProducts from "../RelatedProducts/RelatedProducts";
+import {addProductToCart} from "../../Services/cartServices";
 
 export default function ProductDetails() {
     let {id} = useParams();
     const [product, setProduct] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
+    const [relatedProducts, setRelatedProducts] = useState([]);
 
     const settings = {
         dots: true,
@@ -24,13 +27,23 @@ export default function ProductDetails() {
     useEffect(() => {
         getProductDetails();
 
-    }, [])
-    async function getProductDetails(){
+    }, [id])
+
+  
+
+  function getProductDetails(){
         setIsLoading(true);
-        const {data} = await axios.get(`https://ecommerce.routemisr.com/api/v1/products/${id}`);
-        setProduct(data.data);
+        axios.get(`https://ecommerce.routemisr.com/api/v1/products/${id}`).then(({data})=>{
+            getRelatedProducts(data.data.category._id);
+            setProduct(data.data);
         setIsLoading(false);
+        })
+        
     }
+    async function getRelatedProducts(categoryId){
+      const {data} = await axios.get(`https://ecommerce.routemisr.com/api/v1/products?category=${categoryId}`);
+      setRelatedProducts(data.data);
+  }
   
 
   if(isLoading){
@@ -70,13 +83,6 @@ export default function ProductDetails() {
         <span className="text-sm text-gray-500 ml-2">{product?.ratingsQuantity} reviews</span>
       </div>
       
-      {/* <ul className="text-sm text-gray-700 mb-6">
-        <li className="flex items-center mb-1"><svg className="w-4 h-4 mr-2 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>Core i5 Processor (12th Gen)</li>
-        <li className="flex items-center mb-1"><svg className="w-4 h-4 mr-2 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>8 GB DDR4 RAM</li>
-        <li className="flex items-center mb-1"><svg className="w-4 h-4 mr-2 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>Windows 11 Home</li>
-        <li className="flex items-center"><svg className="w-4 h-4 mr-2 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>512 GB SSD</li>
-      </ul> */}
-      
       <div className="flex items-center justify-between mb-4">
         <div>
           <span className="text-3xl font-bold text-gray-900">${product?.price}</span>
@@ -91,12 +97,13 @@ export default function ProductDetails() {
         <button className="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline transition duration-300">
           Buy Now
         </button>
-        <button className="flex-1 bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline transition duration-300">
+        <button onClick={() => addProductToCart(product._id)} className="flex-1 bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline transition duration-300">
           Add to Cart
         </button>
       </div>
     </div>
   </div>
+        <RelatedProducts  relatedProducts={relatedProducts} />
 </div>
   );
 }
