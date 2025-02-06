@@ -14,6 +14,11 @@ import AuthContextProvider from './Contexts/AuthContext'
 import ProtectedAuthRoute from './Auth/ProtectedAuthRoute'
 import ProductDetails from './components/ProductDetails/ProductDetails'
 import { ToastContainer } from 'react-toastify'
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import CategoryProducts from './Pages/CategriesProducts/CategoryProducts'
+import BrandProducts from './Pages/BrandProducts/BrandProducts'
+import WhishList from './Pages/WhishList/WhishList'
+
 
 const router = createBrowserRouter([
   {
@@ -27,6 +32,9 @@ const router = createBrowserRouter([
       {path:'brands', element:<ProtectedRoute><Brands/></ProtectedRoute> },
       {path:'cart', element:<ProtectedRoute><Cart/></ProtectedRoute> },
       {path:'product/:id',element:<ProtectedRoute><ProductDetails></ProductDetails></ProtectedRoute>},
+      {path:'categories/:id',element:<ProtectedRoute> <CategoryProducts></CategoryProducts></ProtectedRoute>},
+      {path:'brands/:id',element:<ProtectedRoute> <BrandProducts></BrandProducts></ProtectedRoute>},
+      {path:'wishlist', element:<ProtectedRoute><WhishList/></ProtectedRoute> },
       {path:'*', element:<Notfound/>},
 
 
@@ -37,13 +45,14 @@ const router = createBrowserRouter([
 function App() {
   return  (
     <>
+    <QueryClientProvider client={new QueryClient()}>
     <AuthContextProvider>
     <NextUIProvider>
     <RouterProvider router={router}></RouterProvider>
     <ToastContainer/>
     </NextUIProvider>
     </AuthContextProvider>
-       
+       </QueryClientProvider>
     </>
   )
 }

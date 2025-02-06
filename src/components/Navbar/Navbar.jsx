@@ -14,6 +14,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import { authContext } from "../../Contexts/AuthContext";
 
+
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
   const navigator = useNavigate();
@@ -21,9 +22,11 @@ export default function Navbar() {
 
   const menuItems = [
     "Home",
-    "categories",
-    "brands",
-    "cart",   
+    "Categories",
+    "Brands",
+    "Cart", 
+    "Wishlist"
+
   ];
 
  function handleLogout() {
@@ -33,7 +36,8 @@ export default function Navbar() {
   }
 
   return (
-    <HerouiNavbar shouldHideOnScroll onMenuOpenChange={setIsMenuOpen}>
+    
+      <HerouiNavbar shouldHideOnScroll onMenuOpenChange={setIsMenuOpen}>
       <NavbarContent>
         <NavbarMenuToggle
           aria-label={isMenuOpen ? "Close menu" : "Open menu"}
@@ -96,5 +100,6 @@ export default function Navbar() {
      </NavbarMenu>
      }
     </HerouiNavbar>
+   
   );
 }

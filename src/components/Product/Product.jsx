@@ -1,12 +1,14 @@
 import { Button } from "@heroui/react";
 import { Link } from "react-router-dom";
 import { addProductToCart } from "../../Services/cartServices";
+import { addProductToWishList } from "../../Services/WhishList";
 export default function Product({product}) {
 
    
 
     return (
         <div  className="flex flex-col justify-between  mx-auto w-full transform overflow-hidden rounded-lg bg-white dark:bg-slate-800 cursor-pointer shadow-md">
+            
           <Link to={"/product/"+product._id}>
           <div className="overflow-hidden">
           <img className="w-full object-contain object-center duration-300  hover:scale-[103%]" src={product.imageCover} alt="Product Image" />
@@ -22,7 +24,10 @@ export default function Product({product}) {
     </div>
           </Link>
     <div className="m-4">
-<Button onPress={() => addProductToCart(product._id)} color="success" variant="bordered" className="w-full " endContent={<i className="fas fa-shopping-cart"></i>}>Add to cart</Button>
+        <div className="flex items-center justify-between">
+        <Button onPress={() => addProductToCart(product._id)} color="success" variant="bordered" className="w-3/5 " endContent={<i className="fas fa-shopping-cart"></i>}>Add to cart</Button>
+        <Button onPress={() => addProductToWishList(product._id)} color="success"  className="w-1/5 bg-yellow-300 " > <i className="fa-regular fa-star"></i></Button>
+        </div>
     </div>
     </div>
       )
