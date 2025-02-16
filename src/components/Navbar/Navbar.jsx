@@ -46,7 +46,7 @@ export default function NavbarComponent() {
     setIsLoggedIn(false);
     navigator("/login");
   }
-  console.log('userDat',userData)
+  
   return (
     <Navbar className="w-full p-6 bg-gray-900 text-white shadow-lg">
       <NavbarBrand>

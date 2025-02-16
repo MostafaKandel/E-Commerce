@@ -58,7 +58,7 @@ export default function Profile() {
       <div className="flex justify-between mt-6">
         <button className="flex items-center space-x-2 text-gray-700 hover:text-gray-900">
            
-          <Link to="/cart"><i class="fa-solid fa-cart-shopping"></i></Link>
+          <Link to="/cart"><i className="fa-solid fa-cart-shopping"></i></Link>
         </button>
         <button className="flex items-center space-x-2 text-gray-700 hover:text-gray-900">
            

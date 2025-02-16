@@ -25,7 +25,7 @@ export default function WhishList() {
       setWishlist(data.data);
       setIsLoading(false);
       }
-      console.log(wishlist);
+     
       
       if(isLoading){
         return <LoadingScreen />

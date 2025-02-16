@@ -22,6 +22,7 @@ import Profile from './Pages/Profile/Profile'
 import ProfileEdit from './Pages/ProfileEdit/ProfileEdit'
 import Payment from './Pages/Payment/Payment'
 import Orders from './Pages/Orders/Orders'
+import OrderDetails from './Pages/OrderDetails/OrderDetails'
 
 const router = createBrowserRouter([
   {
@@ -40,6 +41,7 @@ const router = createBrowserRouter([
       {path:'product/:id',element: <ProductDetails></ProductDetails> },
       {path:'categories/:id',element:  <CategoryProducts></CategoryProducts> },
       {path:'orders',element:  <ProtectedRoute><Orders/></ProtectedRoute> },
+      {path:'orders/:id',element:  <ProtectedRoute><OrderDetails/></ProtectedRoute> },
       {path:'brands/:id',element:  <BrandProducts></BrandProducts> },
       {path:'wishlist', element:<ProtectedRoute><WhishList/></ProtectedRoute> },
       {path:'*', element:<Notfound/>},

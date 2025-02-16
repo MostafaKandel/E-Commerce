@@ -27,6 +27,8 @@ export default function Cart() {
     }
     setIsLoading(false);
   }
+
+  console.log('catData',cartData);
    
 
   async function removeCartProduct(productId) {
