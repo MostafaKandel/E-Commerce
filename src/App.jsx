@@ -19,7 +19,7 @@ import CategoryProducts from './Pages/CategriesProducts/CategoryProducts'
 import BrandProducts from './Pages/BrandProducts/BrandProducts'
 import WhishList from './Pages/WhishList/WhishList'
 import Profile from './Pages/Profile/Profile'
-
+import ProfileEdit from './Pages/ProfileEdit/ProfileEdit'
 
 const router = createBrowserRouter([
   {
@@ -30,6 +30,7 @@ const router = createBrowserRouter([
       {path: 'login', element: <Login />},
       {path: 'register', element: <Register />},
       {path:'profile',element:<ProtectedAuthRoute><Profile/></ProtectedAuthRoute>},
+      {path:'edit-profile',element:<ProtectedAuthRoute><ProfileEdit/></ProtectedAuthRoute>},
       {path:'categories', element: <Categories/>  },
       {path:'brands', element: <Brands/>  },
       {path:'cart', element:<ProtectedRoute><Cart/></ProtectedRoute> },

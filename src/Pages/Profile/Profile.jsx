@@ -1,19 +1,14 @@
 import React, { useState, useContext, useEffect } from "react";
-import { Input, Button } from "@nextui-org/react";
 import { authContext } from "../../Contexts/AuthContext";
-import { useFormik } from "formik";
-import * as yup from "yup";
 import axios from "axios";
 import LoadingScreen from "../../components/LoadingScreen/LoadingScreen";
-import { useNavigate } from "react-router-dom";
+ import {Link} from 'react-router-dom'
 
 export default function Profile() {
   const { userId } = useContext(authContext);
   const [userData, setUserData] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
-  const [errMsg, setErrMsg] = useState("");
-  const navigate = useNavigate();
-
+ 
   useEffect(() => {
     const fetchUserData = async () => {
       try {
@@ -34,120 +29,43 @@ export default function Profile() {
 
   console.log(userData);
 
-  // Validation Schema
-  const validationSchema = yup.object({
-    name: yup
-      .string()
-      .required("Name is required")
-      .min(3, "Name must be at least 3 characters")
-      .max(20, "Name must be at most 20 characters"),
-    email: yup.string().email().required("Email is required"),
-    phone: yup.string().required("Phone number is required"),
-  });
-
-  // Formik Setup
-  const formik = useFormik({
-    enableReinitialize: true, // Allows updating initial values dynamically
-    initialValues: {
-      name: userData?.name || "",
-      email: userData?.email || "",
-      phone: userData?.phone || "",
-    },
-    validationSchema,
-    onSubmit: async (values) => {
-      try {
-        setErrMsg("");
-        setIsLoading(true);
-
-        // Only send fields that have changed
-        const updatedValues = Object.keys(values).reduce((acc, key) => {
-          if (values[key] !== userData[key]) {
-            acc[key] = values[key];
-          }
-          return acc;
-        }, {});
-
-        if (Object.keys(updatedValues).length === 0) {
-          setErrMsg("No changes detected.");
-          setIsLoading(false);
-          return;
-        }
-
-        await axios.put(
-          "https://ecommerce.routemisr.com/api/v1/users/updateMe",
-          updatedValues,
-          {
-            headers:{
-                token:localStorage.getItem('token')
-            }
-          }
-        
-        );
-
-        navigate("/"); // Redirect after update
-      } catch (error) {
-        setErrMsg(error.response?.data?.message || "An error occurred.");
-      } finally {
-        setIsLoading(false);
-      }
-    },
-  });
-
+  
   if (isLoading) {
     return <LoadingScreen />;
   }
 
   return (
-    <div className="my-10">
-      <form onSubmit={formik.handleSubmit}>
-        <div className="w-2/3 mx-auto grid grid-cols-2 gap-4">
-          <Input
-            isInvalid={formik.errors.name && formik.touched.name}
-            errorMessage={formik.errors.name}
-            onBlur={formik.handleBlur}
-            onChange={formik.handleChange}
-            value={formik.values.name}
-            name="name"
-            variant="bordered"
-            className="col-span-2"
-            label="Name"
-            type="text"
-          />
-          <Input
-            isInvalid={formik.errors.email && formik.touched.email}
-            errorMessage={formik.errors.email}
-            onBlur={formik.handleBlur}
-            onChange={formik.handleChange}
-            value={formik.values.email}
-            name="email"
-            variant="bordered"
-            className="col-span-2"
-            label="Email"
-            type="email"
-          />
-          <Input
-            isInvalid={formik.errors.phone && formik.touched.phone}
-            errorMessage={formik.errors.phone}
-            onBlur={formik.handleBlur}
-            onChange={formik.handleChange}
-            value={formik.values.phone}
-            name="phone"
-            variant="bordered"
-            className="col-span-2"
-            label="Phone"
-            type="tel"
-          />
-          <Button
-            isLoading={isLoading}
-            type="submit"
-            className="col-span-2"
-            color="primary"
-          >
-            Edit
-          </Button>
-          {errMsg && <p className="text-red-500">{errMsg}</p>}
+    <div className="max-w-md mx-auto bg-white shadow-lg rounded-2xl p-6">
+      <div className="flex items-center justify-between mb-4">
+        <h2 className="text-3xl font-semibold text-blue-500">Profile</h2>
+        <Link to="/edit-profile"  className="text-blue-500 hover:text-blue-700"> EDIT</Link>
+         
+      </div>
+      <div className="space-y-3">
+        <div>
+          <p className="text-gray-600 text-sm">Name</p>
+          <p className="text-lg font-medium">{userData.name}</p>
         </div>
-      </form>
+        <div>
+          <p className="text-gray-600 text-sm">Email</p>
+          <p className="text-lg font-medium">{userData.email}</p>
+        </div>
+        <div>
+          <p className="text-gray-600 text-sm">Phone</p>
+          <p className="text-lg font-medium">{userData.phone}</p>
+        </div>
+      </div>
+      <div className="flex justify-between mt-6">
+        <button className="flex items-center space-x-2 text-gray-700 hover:text-gray-900">
+           
+          <Link to="/cart"><i class="fa-solid fa-cart-shopping"></i></Link>
+        </button>
+        <button className="flex items-center space-x-2 text-gray-700 hover:text-gray-900">
+           
+          <Link to="/orders">Orders</Link>
+        </button>
+      </div>
     </div>
+    
   );
 }
