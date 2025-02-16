@@ -20,6 +20,8 @@ import BrandProducts from './Pages/BrandProducts/BrandProducts'
 import WhishList from './Pages/WhishList/WhishList'
 import Profile from './Pages/Profile/Profile'
 import ProfileEdit from './Pages/ProfileEdit/ProfileEdit'
+import Payment from './Pages/Payment/Payment'
+import Orders from './Pages/Orders/Orders'
 
 const router = createBrowserRouter([
   {
@@ -34,8 +36,10 @@ const router = createBrowserRouter([
       {path:'categories', element: <Categories/>  },
       {path:'brands', element: <Brands/>  },
       {path:'cart', element:<ProtectedRoute><Cart/></ProtectedRoute> },
+      {path:'cart/:id', element:<ProtectedRoute><Payment/></ProtectedRoute> },
       {path:'product/:id',element: <ProductDetails></ProductDetails> },
       {path:'categories/:id',element:  <CategoryProducts></CategoryProducts> },
+      {path:'orders',element:  <ProtectedRoute><Orders/></ProtectedRoute> },
       {path:'brands/:id',element:  <BrandProducts></BrandProducts> },
       {path:'wishlist', element:<ProtectedRoute><WhishList/></ProtectedRoute> },
       {path:'*', element:<Notfound/>},

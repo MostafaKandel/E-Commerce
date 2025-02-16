@@ -2,6 +2,7 @@ import axios from "axios";
 import Cartproduct from "../../components/CartProduct/Cartproduct";
 import { useEffect, useState } from "react";
 import LoadingScreen from "../../components/LoadingScreen/LoadingScreen";
+import { Link } from "react-router-dom";
 
 export default function Cart() {
   const [cartData, setCartData] = useState(null);
@@ -26,6 +27,7 @@ export default function Cart() {
     }
     setIsLoading(false);
   }
+   
 
   async function removeCartProduct(productId) {
     try {
@@ -85,9 +87,10 @@ export default function Cart() {
                 <p className="text-lg">{numOfCartItems} Items</p>
                 <p className="font-medium text-lg">${cartData?.totalCartPrice}</p>
               </div>
-              <button className="w-full bg-indigo-600 py-3 text-white font-semibold text-lg rounded-xl hover:bg-indigo-700">
+              <Link to={"/cart/"+cartData?._id}><button className="w-full bg-indigo-600 py-3 text-white font-semibold text-lg rounded-xl hover:bg-indigo-700">
                 Checkout
-              </button>
+              </button></Link>
+              
             </div>
           </div>
         </div>

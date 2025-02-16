@@ -15,7 +15,7 @@ export default function Layout() {
     ) : (
       <>
         <Navbar />
-        <div className="flex-1 container flex items-center justify-center py-10">
+        <div className="flex-1 container">
           <Outlet />
         </div>
       </>
