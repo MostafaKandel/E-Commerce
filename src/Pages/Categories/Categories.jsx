@@ -10,16 +10,16 @@ export default function Categories() {
   useEffect(() => {
     setIsLoading(true);
     axios.get('https://ecommerce.routemisr.com/api/v1/categories')
-      .then((response) =>{
-         setCategories(response.data.data)
-         setIsLoading(false);
-      }
-    )
+      .then((response) => {
+        setCategories(response.data.data);
+        setIsLoading(false);
+      })
       .catch(error => console.error('Error fetching categories:', error));
   }, []);
-    if(isLoading){
-          return <LoadingScreen />;
-        }
+
+  if (isLoading) {
+    return <LoadingScreen />;
+  }
 
   return (
     <div className="flex justify-center items-center">
@@ -28,13 +28,14 @@ export default function Categories() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 w-full">
             {categories.map(category => (
               <div key={category._id} className="relative group flex justify-center items-center h-full w-full">
-                <img className="object-center object-cover h-full w-full" src={category.image} alt={category.name} />
+                <img className="object-cover h-full w-full" src={category.image} alt={category.name} />
+                
+                {/* Button inside Link, Centered on the Image */}
                 <Link to={`/categories/${category._id}`}>
-                <button className="dark:bg-gray-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-400 bottom-4 z-10 absolute text-base font-medium leading-none text-gray-800 py-3 w-36 bg-white">
-                  {category.name}
-                </button>
+                  <button className="absolute bottom-4 left-1/2 transform -translate-x-1/2 z-10 text-base font-medium py-3 w-36 bg-white text-gray-800 dark:bg-gray-800 dark:text-white transition duration-300 ease-in-out group-hover:bg-opacity-80">
+                    {category.name}
+                  </button>
                 </Link>
-                <div className="absolute opacity-0 group-hover:opacity-100 transition duration-500 bottom-3 py-6 z-0 px-20 w-36 bg-white bg-opacity-50"></div>
               </div>
             ))}
           </div>
