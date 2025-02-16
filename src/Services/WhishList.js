@@ -10,6 +10,19 @@ export async function addProductToWishList(productId) {
         }
     )
     console.log(data);
-
     
 }
+
+export async function removeProductToWishList(productId) {
+    const { data } = await axios.delete(`https://ecommerce.routemisr.com/api/v1/wishlist/${productId}`, {
+        headers: {
+            token: localStorage.getItem('token')
+        },
+         // Correct way to send body with DELETE
+    });
+
+    console.log(data);
+    return data; // Optional: Return response if needed
+}
+
+
