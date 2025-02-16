@@ -18,6 +18,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import CategoryProducts from './Pages/CategriesProducts/CategoryProducts'
 import BrandProducts from './Pages/BrandProducts/BrandProducts'
 import WhishList from './Pages/WhishList/WhishList'
+import Profile from './Pages/Profile/Profile'
 
 
 const router = createBrowserRouter([
@@ -25,15 +26,16 @@ const router = createBrowserRouter([
     path: '',
     element: <Layout />,
     children: [ 
-      {index: true, element:<ProtectedRoute><Home /></ProtectedRoute> },
-      {path: 'login', element:<ProtectedAuthRoute> <Login /></ProtectedAuthRoute>},
-      {path: 'register', element:<ProtectedAuthRoute> <Register /></ProtectedAuthRoute>},
-      {path:'categories', element:<ProtectedRoute><Categories/></ProtectedRoute> },
-      {path:'brands', element:<ProtectedRoute><Brands/></ProtectedRoute> },
+      {index: true, element: <Home />  },
+      {path: 'login', element: <Login />},
+      {path: 'register', element: <Register />},
+      {path:'profile',element:<ProtectedAuthRoute><Profile/></ProtectedAuthRoute>},
+      {path:'categories', element: <Categories/>  },
+      {path:'brands', element: <Brands/>  },
       {path:'cart', element:<ProtectedRoute><Cart/></ProtectedRoute> },
-      {path:'product/:id',element:<ProtectedRoute><ProductDetails></ProductDetails></ProtectedRoute>},
-      {path:'categories/:id',element:<ProtectedRoute> <CategoryProducts></CategoryProducts></ProtectedRoute>},
-      {path:'brands/:id',element:<ProtectedRoute> <BrandProducts></BrandProducts></ProtectedRoute>},
+      {path:'product/:id',element: <ProductDetails></ProductDetails> },
+      {path:'categories/:id',element:  <CategoryProducts></CategoryProducts> },
+      {path:'brands/:id',element:  <BrandProducts></BrandProducts> },
       {path:'wishlist', element:<ProtectedRoute><WhishList/></ProtectedRoute> },
       {path:'*', element:<Notfound/>},
 
