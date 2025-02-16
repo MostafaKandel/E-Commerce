@@ -9,16 +9,18 @@ import LoadingScreen from "../../components/LoadingScreen/LoadingScreen";
 export default function Layout() {
   const {isLoading} = useContext(authContext);
   return (
-    <>
-    {
-      isLoading ? <LoadingScreen />:  <>
-      <Navbar />
-      <div className="container py-10">
-      <Outlet/> 
-      </div>
+    <div className="flex flex-col min-h-screen">
+    {isLoading ? (
+      <LoadingScreen />
+    ) : (
+      <>
+        <Navbar />
+        <div className="flex-1 container flex items-center justify-center py-10">
+          <Outlet />
+        </div>
       </>
-    } 
-      <Footer />
-    </>
+    )}
+    <Footer />
+  </div>
   );
 }
