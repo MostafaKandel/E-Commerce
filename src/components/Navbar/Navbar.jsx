@@ -33,7 +33,7 @@ export default function NavbarComponent() {
     };
 
     if (userId) fetchUserData();
-  }, [userId]);
+  }, [userId, userData]);
 
   const menuItems = [
     { name: "Home", path: "/" },
