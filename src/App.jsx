@@ -23,6 +23,9 @@ import ProfileEdit from './Pages/ProfileEdit/ProfileEdit'
 import Payment from './Pages/Payment/Payment'
 import Orders from './Pages/Orders/Orders'
 import OrderDetails from './Pages/OrderDetails/OrderDetails'
+import ForgetPassword from './Pages/ForgetPassword/ForgetPassword'
+import Resetcode from './Pages/ResetCode/Resetcode'
+import ResetPassword from './Pages/ResetPassword/ResetPassword'
 
 const router = createBrowserRouter([
   {
@@ -34,6 +37,9 @@ const router = createBrowserRouter([
       {path: 'register', element: <Register />},
       {path:'profile',element:<ProtectedAuthRoute><Profile/></ProtectedAuthRoute>},
       {path:'edit-profile',element:<ProtectedAuthRoute><ProfileEdit/></ProtectedAuthRoute>},
+      {path:'forget-password',element: <ForgetPassword/> },
+      {path:'reset-code',element: <Resetcode/> },
+      {path:'resetPassword',element: <ResetPassword/> },
       {path:'categories', element: <Categories/>  },
       {path:'brands', element: <Brands/>  },
       {path:'cart', element:<ProtectedRoute><Cart/></ProtectedRoute> },

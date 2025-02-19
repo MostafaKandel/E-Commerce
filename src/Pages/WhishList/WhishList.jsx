@@ -30,6 +30,11 @@ export default function WhishList() {
       if(isLoading){
         return <LoadingScreen />
       }
+      if(wishlist.length === 0){
+        return (
+          
+                <h1 className="text-3xl font-bold  mx-auto">Your Wishlist is Empty</h1>)}
+                
 
   return (
     <div>

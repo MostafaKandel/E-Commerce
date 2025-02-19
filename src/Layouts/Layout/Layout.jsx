@@ -15,7 +15,7 @@ export default function Layout() {
     ) : (
       <>
         <Navbar />
-        <div className="flex-1 container">
+        <div className="flex-1 container py-4">
           <Outlet />
         </div>
       </>
