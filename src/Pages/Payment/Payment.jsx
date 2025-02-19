@@ -5,6 +5,7 @@ import {useFormik} from 'formik'
 import * as yup from 'yup'
 import axios from 'axios';
 import { Navigate, useNavigate } from 'react-router-dom';
+import { toast,Bounce } from "react-toastify";
 
 export default function Payment() {
     const {id} = useParams();
@@ -29,6 +30,18 @@ export default function Payment() {
     })
     .then((res) => {
       console.log('res',res)
+      toast.success("Order placed successfully!", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        transition: Bounce,
+        });
+      navigator('/orders')
      
     })
     .catch((err) => {
@@ -36,6 +49,8 @@ export default function Payment() {
       setErrMsg(err.response.data.message)
     }).finally(() => setIsLoading(false));
   }
+
+  
 
   const validationSchema = yup.object({
     details: yup.string().optional(),
@@ -63,4 +78,4 @@ export default function Payment() {
            </form>
          </div>
   );
-}
+} 
