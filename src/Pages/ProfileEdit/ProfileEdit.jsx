@@ -6,6 +6,7 @@ import * as yup from "yup";
 import axios from "axios";
 import LoadingScreen from "../../components/LoadingScreen/LoadingScreen";
 import { useNavigate } from "react-router-dom";
+import { toast,Bounce } from "react-toastify";
 
 export default function ProfileEdit() {
   const { userId } = useContext(authContext);
@@ -66,13 +67,7 @@ export default function ProfileEdit() {
           }
           return acc;
         }, {});
-
-        // if (Object.keys(updatedValues).length === 0) {
-        //   setErrMsg("No changes detected.");
-        //   setIsLoading(false);
-        //   return;
-        // }
-
+        
         await axios.put(
           "https://ecommerce.routemisr.com/api/v1/users/updateMe",
           updatedValues,
@@ -83,6 +78,17 @@ export default function ProfileEdit() {
           }
         
         );
+        toast.success("Your profile has been updated.", {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: false,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+          transition: Bounce,
+          });
 
         navigate('/profile'); 
       } catch (error) {
