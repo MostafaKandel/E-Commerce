@@ -52,12 +52,24 @@ export default function Product({product}) {
     <div className="m-4">
         <div className="flex items-center justify-between">
         <Button onPress={() => addProductToCart(product._id)} color="success" variant="bordered" className="w-3/5 " endContent={<i className="fas fa-shopping-cart"></i>}>Add to cart</Button>
-        <Button
+        {/* <Button
             onPress={handleWishlistToggle}
             color={isInWishlist ? "danger" : "success"}
             className={`w-1/5 ${isInWishlist ? "bg-yellow-400" : "bg-yellow-200"}`}
           >
             <i className={isInWishlist ? "fa-solid fa-star " : "fa-regular fa-star"}></i>
+          </Button> */}
+          <Button
+            onPress={handleWishlistToggle}
+            className="w-1/5"
+            style={{
+              backgroundColor: isInWishlist ? "#facc15" : "white", // Yellow when active
+              border: "1px solid gray",
+            }}
+          >
+            <i
+              className={`fa-heart ${isInWishlist ? "fa-solid text-white" : "fa-regular text-black"}`} // White heart when active
+            ></i>
           </Button>
         </div>
     </div>
