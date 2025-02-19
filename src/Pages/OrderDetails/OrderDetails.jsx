@@ -7,8 +7,8 @@ import LoadingScreen from '../../components/LoadingScreen/LoadingScreen';
 import { i } from 'framer-motion/client';
 
 export default function OrderDetails() {
-    const { id } = useParams(); // Extract order ID from URL
-    const { userId } = useContext(authContext); // Get user ID from context
+    const { id } = useParams();  
+    const { userId } = useContext(authContext);  
 
     // Fetch all orders for the user
     const { data, isLoading, isError } = useQuery({
@@ -17,7 +17,7 @@ export default function OrderDetails() {
             const res = await axios.get(`https://ecommerce.routemisr.com/api/v1/orders/user/${userId}`);
             return res.data;
         },
-         // Ensures the query runs only when userId is available
+          
     });
    
 
