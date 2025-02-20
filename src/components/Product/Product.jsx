@@ -7,8 +7,6 @@ import { addProductToWishList, removeProductToWishList } from "../../Services/Wh
 export default function Product({product, isWishListPage=false, handleRemoveFromWishList}) {
     
     const [isInWishlist, setIsInWishlist] = useState(false);
-
-   
     // Function to handle wishlist toggle
     const handleWishlistToggle = async () => {
       if (isInWishlist) {
@@ -18,7 +16,6 @@ export default function Product({product, isWishListPage=false, handleRemoveFrom
       }
       setIsInWishlist(!isInWishlist); // Toggle state
     };
-
 
     return (
         <div  className="flex flex-col justify-between  mx-auto w-full transform overflow-hidden rounded-lg bg-white dark:bg-slate-800 cursor-pointer shadow-lg transition duration-300 ease-in-out">

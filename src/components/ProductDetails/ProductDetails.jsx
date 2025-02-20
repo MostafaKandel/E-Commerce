@@ -29,8 +29,6 @@ export default function ProductDetails() {
 
     }, [id])
 
-  
-
   function getProductDetails(){
         setIsLoading(true);
         axios.get(`https://ecommerce.routemisr.com/api/v1/products/${id}`).then(({data})=>{

@@ -52,8 +52,6 @@ const router = createBrowserRouter([
       {path:'brands/:id',element:  <BrandProducts></BrandProducts> },
       {path:'wishlist', element:<ProtectedRoute><WhishList/></ProtectedRoute> },
       {path:'*', element:<Notfound/>},
-
-
     ]
   }
 ])

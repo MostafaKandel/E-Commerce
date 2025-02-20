@@ -28,9 +28,6 @@ export default function Cart() {
     setIsLoading(false);
   }
 
-
-   
-
   async function removeCartProduct(productId) {
     try {
       const { data } = await axios.delete(`https://ecommerce.routemisr.com/api/v1/cart/${productId}`, {
