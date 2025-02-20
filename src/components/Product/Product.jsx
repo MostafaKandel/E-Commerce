@@ -1,13 +1,14 @@
 import { Button } from "@heroui/react";
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { addProductToCart } from "../../Services/cartServices";
 import { addProductToWishList, removeProductToWishList } from "../../Services/WhishList";
 
-export default function Product({product}) {
+export default function Product({product, isWishListPage=false, handleRemoveFromWishList}) {
     
     const [isInWishlist, setIsInWishlist] = useState(false);
 
+   
     // Function to handle wishlist toggle
     const handleWishlistToggle = async () => {
       if (isInWishlist) {
@@ -17,6 +18,7 @@ export default function Product({product}) {
       }
       setIsInWishlist(!isInWishlist); // Toggle state
     };
+
 
     return (
         <div  className="flex flex-col justify-between  mx-auto w-full transform overflow-hidden rounded-lg bg-white dark:bg-slate-800 cursor-pointer shadow-lg transition duration-300 ease-in-out">
@@ -37,7 +39,7 @@ export default function Product({product}) {
                 <p className="text-base font-medium text-gray-500 line-through dark:text-gray-300">
                   ${product.price}
                 </p>
-                <p className="ml-auto text-base font-medium text-green-500">{Math.floor((product.price - product.priceAfterDiscount) / product.price * 100)}% off</p>
+                <p className="ml-auto text-base font-medium text-red-600">{Math.floor((product.price - product.priceAfterDiscount) / product.price * 100)}% off</p>
               </>
             ) : (
               <p className="mr-2 text-lg font-semibold text-gray-900 dark:text-white">
@@ -50,27 +52,25 @@ export default function Product({product}) {
     </div>
           </Link>
     <div className="m-4">
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-between gap-3">
         <Button onPress={() => addProductToCart(product._id)} color="success" variant="bordered" className="w-3/5 " endContent={<i className="fas fa-shopping-cart"></i>}>Add to cart</Button>
-        {/* <Button
-            onPress={handleWishlistToggle}
-            color={isInWishlist ? "danger" : "success"}
-            className={`w-1/5 ${isInWishlist ? "bg-yellow-400" : "bg-yellow-200"}`}
-          >
-            <i className={isInWishlist ? "fa-solid fa-star " : "fa-regular fa-star"}></i>
-          </Button> */}
-          <Button
-            onPress={handleWishlistToggle}
-            className="w-1/5"
-            style={{
-              backgroundColor: isInWishlist ? "#facc15" : "white", // Yellow when active
-              border: "1px solid gray",
-            }}
-          >
-            <i
-              className={`fa-heart ${isInWishlist ? "fa-solid text-white" : "fa-regular text-black"}`} // White heart when active
-            ></i>
-          </Button>
+        
+          {
+              !isWishListPage?<Button
+              onPress={handleWishlistToggle}
+              className="w-1/5"
+              style={{
+                backgroundColor: isInWishlist ? "#facc15" : "white", // Yellow when active
+                border: "1px solid gray",
+              }}
+            >
+              <i
+                className={`fa-heart ${isInWishlist ? "fa-solid text-white" : "fa-regular text-black"}`} // White heart when active
+              ></i>
+            </Button>:
+            <Button onPress={() => handleRemoveFromWishList(product._id)} color="danger" variant="bordered" className="w-2/5" >Remove </Button>
+          }
+          
         </div>
     </div>
     </div>
